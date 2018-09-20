@@ -1,5 +1,4 @@
 {% set version = '1.4.1' %}
-
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -10,44 +9,44 @@ package:
 source:
   fn: acepack_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/acepack_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/acepack/acepack_{{ version }}.tar.gz
-
+    - {{ cran_mirror }}/src/contrib/acepack_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/acepack/acepack_{{ version }}.tar.gz
   sha256: 82750507926f02a696f6cc03693e8d4a5ee7e92500c8c15a16a9c12addcd28b9
 
 build:
   merge_build_host: True  # [win]
+  number: 2
   skip: true  # [win32]
-  number: 1
-
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - posix                # [win]
-    - {{ compiler('fortran') }}        # [unix]
-    - {{ compiler('m2w64_fortran') }}  # [win]
-    - {{ compiler('c') }}        # [unix]
-    - {{ compiler('m2w64_c') }}  # [win]
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('fortran') }}  # [not win]
+    - {{native}}toolchain        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}make
+    - {{posix}}sed               # [win]
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
   host:
     - r-base
-
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
 
 test:
   commands:
-    - $R -e "library('acepack')"  # [not win]
+    - $R -e "library('acepack')"           # [not win]
     - "\"%R%\" -e \"library('acepack')\""  # [win]
 
 about:
   home: https://CRAN.R-project.org/package=acepack
   license: MIT
   license_file: LICENSE
-  summary: |
-    Two nonparametric methods for multiple regression transform selection are provided.
+  summary: Two nonparametric methods for multiple regression transform selection are provided.
     The first, Alternative Conditional Expectations (ACE),  is an algorithm to find
     the fixed point of maximal correlation, i.e. it finds a set of transformed response
     variables that maximizes R^2 using smoothing functions [see Breiman, L., and J.H.
@@ -65,3 +64,7 @@ extra:
   recipe-maintainers:
     - johanneskoester
     - bgruening
+    - daler
+    - jdblischak
+    - cbrueffer
+    - dbast
