@@ -7,7 +7,6 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: acepack_{{ version }}.tar.gz
   url:
     - {{ cran_mirror }}/src/contrib/acepack_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/acepack/acepack_{{ version }}.tar.gz
@@ -15,8 +14,7 @@ source:
 
 build:
   merge_build_host: True  # [win]
-  number: 1005
-  skip: true  # [win32]
+  number: 1006
   rpaths:
     - lib/R/lib/
     - lib/
@@ -64,9 +62,3 @@ about:
 extra:
   recipe-maintainers:
     - conda-forge/r
-    - johanneskoester
-    - bgruening
-    - daler
-    - jdblischak
-    - cbrueffer
-    - dbast
