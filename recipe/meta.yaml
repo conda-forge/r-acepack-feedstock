@@ -1,4 +1,4 @@
-{% set version = "1.4.2" %}
+{% set version = "1.5.0" %}
 {% set posix = 'm2-' if win else '' %}
 
 package:
@@ -9,10 +9,10 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/acepack_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/acepack/acepack_{{ version }}.tar.gz
-  sha256: 5bffcd12b783f372bb6c50e35317744ac31597c91b6433442a7b0dce2f66ac91
+  sha256: 81ce54161314dfe636d42753176799260ff4a7fb084a302d000cbde17b2d16b2
 
 build:
-  number: 1
+  number: 0
   rpaths:
     - lib/R/lib/
     - lib/
